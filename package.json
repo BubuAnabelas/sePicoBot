@@ -19,7 +19,8 @@
     "mongoose": "^5.11.4",
     "nodemon": "^2.0.6",
     "rimraf": "^3.0.2",
-    "tmi.js": "^1.5.0"
+    "tmi.js": "^1.5.0",
+    "express": "^4.17.1"
   },
   "devDependencies": {},
   "babel": {
