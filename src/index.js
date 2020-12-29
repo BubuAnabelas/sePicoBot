@@ -1,4 +1,4 @@
-const tmi = require('tmi.js');
+const tmi = require('tmi.js'); 
 const mongoose = require('mongoose');
 import { Match } from './models/match';
 import { Iam } from './models/iam';
