@@ -11,6 +11,11 @@ db.once('open', function () {
 });
 
 
+const express = require('express');
+const path = require('path');
+const app = express();
+
+
 const options = {
 	options: {
 		debug: true
