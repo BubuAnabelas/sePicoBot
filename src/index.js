@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 import { Match } from './models/match';
 import { Iam } from './models/iam';
 import { Puntos } from './models/punto';
-mongoose.connect(process.env.DB), { useNewUrlParser: true });
+mongoose.connect(process.env.DB, { useNewUrlParser: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
