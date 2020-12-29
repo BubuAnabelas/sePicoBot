@@ -23,7 +23,7 @@ const options = {
 		username: 'SePicoBot',
 		password: process.env.TWITCH_OAUTH
 	},
-	channels: ['jmellera']
+	channels: ['ieltxu']
 }
 
 const client = new tmi.client(options);
