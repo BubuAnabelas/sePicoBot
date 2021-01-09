@@ -68,7 +68,7 @@ client.on('message', (channel, tags, message, self) => {
           let user = args[0].toLowerCase();
           Puntos.find({ user: user }, (err, puntos) => {
             if (err) throw new Error(err);
-            if (puntos) {
+            if (puntos && user != tags.username) {
               const total = puntos ? puntos.length + 1 : 1;
               const punto = new Puntos({ user, givenBy: tags.username });
               punto.save();
