@@ -10,9 +10,9 @@ db.once('open', function () {
   console.log('conectado');
 });
 
-const express = require('express');
-const path = require('path');
-const app = express();
+// const express = require('express');
+// const path = require('path');
+// const app = express();
 
 const options = {
   options: {
@@ -21,6 +21,7 @@ const options = {
   connection: {
     cluster: 'aws',
     reconnect: true,
+    port: process.env.PORT || 80,
   },
   identity: {
     username: 'SePicoBot',
