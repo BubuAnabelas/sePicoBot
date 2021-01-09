@@ -4,6 +4,7 @@ import { Match } from './models/match';
 import { Iam } from './models/iam';
 import { Puntos } from './models/punto';
 mongoose.connect(process.env.DB, { useNewUrlParser: true });
+
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
@@ -12,13 +13,19 @@ db.once('open', function () {
 
 const express = require('express');
 const app = express();
-
+const canalDeTwitch = 'jmellera';
 app.listen(process.env.PORT, () =>
-  console.log('Gator app listening on port !' + process.env.PORT)
+  console.log('Se pico bot en ' + process.env.PORT || 80)
 );
 
 app.get('/', (req, res) => {
-  res.send('Se Pico Bot');
+  try {
+    Puntos.find((err, puntos) => {
+      if (puntos) {
+        res.send(puntos);
+      }
+    });
+  } catch (error) {}
 });
 const options = {
   options: {
@@ -32,7 +39,7 @@ const options = {
     username: 'SePicoBot',
     password: process.env.TWITCH_OAUTH,
   },
-  channels: ['ieltxu'],
+  channels: [canalDeTwitch],
 };
 
 const client = new tmi.client(options);
@@ -54,28 +61,28 @@ client.on('message', (channel, tags, message, self) => {
         iam.save();
       }
     }
-    /* 	if(command === 'punto' && tags.mod) {
-				try {
-					if(args[0]){
-						args[0] = args[0].startsWith('@') ? args[0].substring(1): args[0];
-						let user = args[0].toLowerCase();
-		
-						Puntos.findOne({user}, (err, puntos) => {
-							if(puntos){
-								puntos.puntos = puntos.puntos + 1;
-								puntos.save();
-								client.say(channel, `punto punto punto para la ${user} army! ${user} tiene ${puntos.puntos} puntos!`)
-							} else {
-								const puntos = new Puntos({user, puntos: 1});
-								puntos.save()
-								client.say(channel, `punto punto punto para la ${user} army! ${user} tiene 1 punto!`)
-							}
-						});
-					}
-				} catch (error) {
-					console.log(error);
-				}
-			} */
+    if (command === 'punto' && (tags.mod || tags.badges.broadcaster === '1')) {
+      try {
+        if (args[0] && args[0].startsWith('@')) {
+          args[0] = args[0].startsWith('@') ? args[0].substring(1) : args[0];
+          let user = args[0].toLowerCase();
+          Puntos.find({ user: user }, (err, puntos) => {
+            if (err) throw new Error(err);
+            if (puntos) {
+              const total = puntos ? puntos.length + 1 : 1;
+              const punto = new Puntos({ user, givenBy: tags.username });
+              punto.save();
+              client.say(
+                channel,
+                `punto punto punto para la ${user} army! ${user} tiene ${total} puntos!`
+              );
+            }
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
 
     if (command === 'like') {
       if (args[0]) {
