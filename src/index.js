@@ -27,7 +27,6 @@ const options = {
   connection: {
     cluster: 'aws',
     reconnect: true,
-    port: process.env.PORT || 80,
   },
   identity: {
     username: 'SePicoBot',
