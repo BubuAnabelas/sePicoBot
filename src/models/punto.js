@@ -1,8 +1,11 @@
 const mongoose = require('mongoose');
 
-const puntoSchema = new mongoose.Schema({
+const puntoSchema = new mongoose.Schema(
+  {
     user: String,
-    puntos: Number
-  });
+    givenBy: String,
+  },
+  { timestamps: true }
+);
 
 export const Puntos = mongoose.model('Puntos', puntoSchema);
