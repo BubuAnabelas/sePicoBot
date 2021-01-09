@@ -16,7 +16,7 @@ const app = express();
 
 const options = {
   options: {
-    debug: true,
+    debug: false,
   },
   connection: {
     cluster: 'aws',
