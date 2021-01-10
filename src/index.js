@@ -73,10 +73,17 @@ client.on('message', (channel, tags, message, self) => {
               const total = puntos ? puntos.length + 1 : 1;
               const punto = new Puntos({ user, givenBy: tags.username });
               punto.save();
-              client.say(
-                channel,
-                `punto punto punto para la ${user} army! @${user} tiene ${total} puntos!`
-              );
+              if (user !== 'menem91') {
+                client.say(
+                  channel,
+                  `punto punto punto para la ${user} army! @${user} tiene ${total} puntos!`
+                );
+              } else {
+                client.say(
+                  channel,
+                  `punto punto punto para la ${user} army! @${user} tiene -${total} puntos!`
+                );
+              }
             } else {
               client.say(channel, `No seas corrupto @${tags.username}!`);
             }
