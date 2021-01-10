@@ -27,6 +27,13 @@ app.get('/', (req, res) => {
     });
   } catch (error) {}
 });
+app.get('/reset', (req, res) => {
+  try {
+    Puntos.remove({}, (err, puntos) => {
+      res.send('puntos borrados');
+    });
+  } catch (error) {}
+});
 
 const options = {
   options: {
