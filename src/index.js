@@ -27,6 +27,7 @@ app.get('/', (req, res) => {
     });
   } catch (error) {}
 });
+
 const options = {
   options: {
     debug: false,
@@ -74,8 +75,28 @@ client.on('message', (channel, tags, message, self) => {
               punto.save();
               client.say(
                 channel,
-                `punto punto punto para la ${user} army! ${user} tiene ${total} puntos!`
+                `punto punto punto para la ${user} army! @${user} tiene ${total} puntos!`
               );
+            } else {
+              client.say(channel, `No seas corrupto @${tags.username}!`);
+            }
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    if (command === 'puntos') {
+      try {
+        if (args[0] && args[0].startsWith('@')) {
+          args[0] = args[0].startsWith('@') ? args[0].substring(1) : args[0];
+          let user = args[0].toLowerCase();
+          Puntos.find({ user: user }, (err, puntos) => {
+            if (err) throw new Error(err);
+            if (puntos) {
+              const total = puntos.length;
+              client.say(channel, `@${user} tiene ${total} puntos!`);
             }
           });
         }
