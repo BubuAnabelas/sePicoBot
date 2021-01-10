@@ -103,7 +103,11 @@ client.on('message', (channel, tags, message, self) => {
             if (err) throw new Error(err);
             if (puntos) {
               const total = puntos.length;
-              client.say(channel, `@${user} tiene ${total} puntos!`);
+              if (user !== 'menem91') {
+                client.say(channel, `@${user} tiene ${total} puntos!`);
+              } else {
+                client.say(channel, `@${user} tiene -${total} puntos!`);
+              }
             }
           });
         }
