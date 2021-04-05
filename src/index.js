@@ -68,17 +68,17 @@ client.on('message', (channel, tags, message, self) => {
         }
         break;
       }
-      case CONSTANS.COMMANDS.PUNTOS: {
+      case CONSTANTS.COMMANDS.PUNTOS: {
         puntosController.puntos(args, channel, tags, message, self);
         break;
       }
-      case CONSTANS.COMMANDS.LIKE: {
+      case CONSTANTS.COMMANDS.LIKE: {
         sePicoController.like(args, channel, tags, message, self)
       }
-      case CONSTANS.COMMANDS.LIKE: {
+      case CONSTANTS.COMMANDS.LIKE: {
         sePicoController.like(args, channel, tags, message, self)
       }
-      case CONSTANS.COMMANDS.AMONESTACIONES: {
+      case CONSTANTS.COMMANDS.AMONESTACIONES: {
         amonestacionesController.amonestacion(args, channel, tags, message, self)
       }
     }
