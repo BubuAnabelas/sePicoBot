@@ -7,6 +7,6 @@ export const CONSTANTS = {
     DADOS: "dados"
   },
   AMONESTACIONES: {
-    AMONESTACIONES_PARA_TIMEOUT: 15
+    AMONESTACIONES_PARA_TIMEOUT: 3
   }
 };

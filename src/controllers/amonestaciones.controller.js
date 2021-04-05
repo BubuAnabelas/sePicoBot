@@ -5,7 +5,7 @@ export const amonestacion = (client, args, channel, tags, message, self) => {
   try {
     if (args[0] && args[0].startsWith('@')) {
       args[0] = args[0].startsWith('@') ? args[0].substring(1) : args[0];
-      let amonestacionesDadas = args[1] ? parseInt(args[1]) : 5;
+      let amonestacionesDadas = args[1] ? parseInt(args[1]) : 1;
       if (isNaN(amonestacionesDadas) || amonestacionesDadas < 0) return;
       if (amonestacionesDadas > CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT) {
         amonestacionesDadas = CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT;
@@ -27,16 +27,16 @@ export const amonestacion = (client, args, channel, tags, message, self) => {
               channel,
               user,
               300,
-              `amonestaciones`
+              `strikes`
             );
             client.say(
               channel,
-              `${user} se fue timeouteado por amonestaciones`
+              `${user} se fue timeouteado por strikes`
             );
           } else {
             client.say(
               channel,
-              `${user} tenes un total de ${totalActuales} amonestaciones`
+              `${user} tenes un total de ${totalActuales} strikes`
             );
           }
         } else {
@@ -49,12 +49,12 @@ export const amonestacion = (client, args, channel, tags, message, self) => {
             );
             client.say(
               channel,
-              `${user} se fue timeouteado por amonestaciones`
+              `${user} se fue timeouteado por strikes`
             );
           } else {
             client.say(
               channel,
-              `${user} tenes un total de ${total} amonestaciones`
+              `${user} tenes un total de ${total} strikes`
             );
           }
         }
