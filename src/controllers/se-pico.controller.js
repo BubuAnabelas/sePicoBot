@@ -1,3 +1,5 @@
+import { Match } from '../models/match';
+
 export const like = (client, args, channel, tags, message, self) => {
   if (args[0]) {
     args[0] = args[0].startsWith('@') ? args[0].substring(1) : args[0];
