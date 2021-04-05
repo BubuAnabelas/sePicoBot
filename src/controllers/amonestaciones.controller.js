@@ -2,7 +2,6 @@ import { CONSTANTS } from "../constants/constants";
 import { Amonestaciones } from "../models/amonestaciones";
 
 export const amonestacion = (client, args, channel, tags, message, self) => {
-  console.log(args)
   try {
     if (args[0] && args[0].startsWith('@')) {
       args[0] = args[0].startsWith('@') ? args[0].substring(1) : args[0];
@@ -15,9 +14,7 @@ export const amonestacion = (client, args, channel, tags, message, self) => {
       Amonestaciones.find({ user: user }, (err, amonestaciones) => {
         if (err) throw new Error(err);
         if (user == tags.username) return
-        console.log(amonestaciones)
         if (amonestaciones) {
-          console.log(amonestaciones)
           const amonestacionesPasadas = amonestaciones.reduce((acc, a) => acc + a.quantity, 0);
           const timeoutsDados = parseInt(amonestacionesPasadas / CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT, 10);
           const total = amonestacionesPasadas + amonestacionesDadas;
@@ -25,13 +22,12 @@ export const amonestacion = (client, args, channel, tags, message, self) => {
 
           const amonestacion = new Amonestaciones({ user, givenBy: tags.username, quantity: amonestacionesDadas });
           amonestacion.save();
-          console.log('total', total)
-          console.log('actuales', parseInt(total / CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT, 10))
-          console.log('dados', timeoutsDados)
           if (parseInt(total / CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT, 10) > timeoutsDados) {
-            client.say(
+            client.timeout(
               channel,
-              `/timeout @${user} 300`
+              `@${user}`,
+              300,
+              `amonestaciones`
             );
             client.say(
               channel,
