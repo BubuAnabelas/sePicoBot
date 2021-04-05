@@ -16,7 +16,7 @@ db.once('open', function () {
 
 const express = require('express');
 const app = express();
-const canalDeTwitch = 'ieltxu';
+const canalDeTwitch = 'jmellera';
 app.listen(process.env.PORT, () =>
   console.log('Se pico bot en ' + process.env.PORT || 80)
 );
