@@ -2,6 +2,7 @@ const tmi = require('tmi.js');
 const mongoose = require('mongoose');
 import * as puntosController from './controllers/puntos.controller';
 import * as sePicoController from './controllers/se-pico.controller';
+import * as dadosController from './controllers/dados.controller';
 import * as amonestacionesController from './controllers/amonestaciones.controller';
 import { Puntos } from './models/punto';
 import { CONSTANTS } from './constants/constants';
@@ -76,7 +77,14 @@ client.on('message', (channel, tags, message, self) => {
         sePicoController.like(client, args, channel, tags, message, self)
       }
       case CONSTANTS.COMMANDS.AMONESTACION: {
-        amonestacionesController.amonestacion(client, args, channel, tags, message, self)
+        if (tags.mod || tags.badges.broadcaster === '1') {
+          amonestacionesController.amonestacion(client, args, channel, tags, message, self)
+        }
+      }
+      case CONSTANTS.COMMANDS.DADOS: {
+        if (tags.mod || tags.badges.broadcaster === '1') {
+          dadosController.dados(client, args, channel, tags, message, self)
+        }
       }
     }
   } catch (error) {
