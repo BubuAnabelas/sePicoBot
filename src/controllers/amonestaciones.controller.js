@@ -17,6 +17,7 @@ export const amonestacion = (client, args, channel, tags, message, self) => {
         if (user == tags.username) return
         console.log(amonestaciones)
         if (amonestaciones) {
+          console.log(amonestaciones)
           const amonestacionesPasadas = amonestaciones.reduce((acc, a) => acc + a, 0);
           const timeoutsDados = parseInt(amonestacionesPasadas / CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT, 10);
           const total = amonestacionesPasadas + amonestacionesPasadas;
