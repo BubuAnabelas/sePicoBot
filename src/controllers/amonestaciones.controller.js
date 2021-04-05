@@ -7,6 +7,7 @@ export const amonestacion = (client, args, channel, tags, message, self) => {
     if (args[0] && args[0].startsWith('@')) {
       args[0] = args[0].startsWith('@') ? args[0].substring(1) : args[0];
       let amonestacionesDadas = args[1] || 5;
+      console.log(amonestacionesDadas)
       if (isNaN(amonestacionesDadas) || amonestacionesDadas < 0) return;
       if (amonestacionesDadas > CONSTANTS.AMONESTACIONES_PARA_TIMEOUT) {
         amonestacionesDadas = CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT;
@@ -15,6 +16,7 @@ export const amonestacion = (client, args, channel, tags, message, self) => {
       Amonestaciones.find({ user: user }, (err, amonestaciones) => {
         if (err) throw new Error(err);
         if (user != tags.username) return
+        console.log(amonestaciones)
         if (amonestaciones) {
           const amonestacionesPasadas = amonestaciones.reduce((acc, a => acc + a), 0);
           const timeoutsDados = parseInt(amonestacionesPasadas / CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT, 10);
@@ -39,6 +41,7 @@ export const amonestacion = (client, args, channel, tags, message, self) => {
             );
           }
         } else {
+          console.log('no tiene')
           const amonestacion = new Amonestaciones({ user, givenBy: tags.username, quantity: amonestacionesDadas });
           amonestacion.save();
           if (amonestacionesDadas === CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT) {
