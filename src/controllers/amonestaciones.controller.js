@@ -25,7 +25,11 @@ export const amonestacion = (client, args, channel, tags, message, self) => {
 
           const amonestacion = new Amonestaciones({ user, givenBy: tags.username, quantity: amonestacionesDadas });
           amonestacion.save();
+          console.log('total', total)
+          console.log('actuales', parseInt(total / CONSTANTS.AMONESTACIONES_PARA_TIMEOUT, 10))
+          console.log('dados', timeoutsDados)
           if (parseInt(total / CONSTANTS.AMONESTACIONES_PARA_TIMEOUT, 10) > timeoutsDados) {
+
             client.say(
               channel,
               `/timeout @${user} 300`
