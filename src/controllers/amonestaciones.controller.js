@@ -25,7 +25,7 @@ export const amonestacion = (client, args, channel, tags, message, self) => {
           if (parseInt(total / CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT, 10) > timeoutsDados) {
             client.timeout(
               channel,
-              `@${user}`,
+              user,
               300,
               `amonestaciones`
             );
