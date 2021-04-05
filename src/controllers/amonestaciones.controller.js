@@ -2,6 +2,7 @@ import { CONSTANTS } from "../constants/constants";
 import { Amonestaciones } from "../models/amonestaciones";
 
 export const amonestacion = (client, args, channel, tags, message, self) => {
+  console.log(args)
   try {
     if (args[0] && args[0].startsWith('@')) {
       args[0] = args[0].startsWith('@') ? args[0].substring(1) : args[0];
@@ -39,6 +40,7 @@ export const amonestacion = (client, args, channel, tags, message, self) => {
           }
         } else {
           const amonestacion = new Amonestaciones({ user, givenBy: tags.username, quantity: amonestacionesDadas });
+          amonestacion.save();
           if (amonestacionesDadas === CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT) {
             client.say(
               channel,
