@@ -75,10 +75,7 @@ client.on('message', (channel, tags, message, self) => {
       case CONSTANTS.COMMANDS.LIKE: {
         sePicoController.like(client, args, channel, tags, message, self)
       }
-      case CONSTANTS.COMMANDS.LIKE: {
-        sePicoController.like(client, args, channel, tags, message, self)
-      }
-      case CONSTANTS.COMMANDS.AMONESTACIONES: {
+      case CONSTANTS.COMMANDS.AMONESTACION: {
         amonestacionesController.amonestacion(client, args, channel, tags, message, self)
       }
     }
