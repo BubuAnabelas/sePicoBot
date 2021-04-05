@@ -64,22 +64,22 @@ client.on('message', (channel, tags, message, self) => {
     switch (command) {
       case CONSTANTS.COMMANDS.PUNTO: {
         if (tags.mod || tags.badges.broadcaster === '1') {
-          puntosController.punto(args, channel, tags, message, self);
+          puntosController.punto(client, args, channel, tags, message, self);
         }
         break;
       }
       case CONSTANTS.COMMANDS.PUNTOS: {
-        puntosController.puntos(args, channel, tags, message, self);
+        puntosController.puntos(client, args, channel, tags, message, self);
         break;
       }
       case CONSTANTS.COMMANDS.LIKE: {
-        sePicoController.like(args, channel, tags, message, self)
+        sePicoController.like(client, args, channel, tags, message, self)
       }
       case CONSTANTS.COMMANDS.LIKE: {
-        sePicoController.like(args, channel, tags, message, self)
+        sePicoController.like(client, args, channel, tags, message, self)
       }
       case CONSTANTS.COMMANDS.AMONESTACIONES: {
-        amonestacionesController.amonestacion(args, channel, tags, message, self)
+        amonestacionesController.amonestacion(client, args, channel, tags, message, self)
       }
     }
   } catch (error) {

@@ -1,7 +1,7 @@
-export const like = (args, channel, tags, message, self) => {
+export const like = (client, args, channel, tags, message, self) => {
   if (args[0]) {
     args[0] = args[0].startsWith('@') ? args[0].substring(1) : args[0];
-    searchIfSomeoenLikedMe(channel, tags.username, args[0]);
+    searchIfSomeoenLikedMe(client, channel, tags.username, args[0]);
   }
 }
 
@@ -14,7 +14,7 @@ function newMatch(who, likes) {
   });
 }
 
-function searchIfSomeoenLikedMyInstagram(channel, miInstagram, who) {
+function searchIfSomeoenLikedMyInstagram(client, channel, miInstagram, who) {
   return new Promise((resolve, reject) => {
     Match.findOne({ likes: miInstagram.who, who }, (err, match) => {
       if (err) {
@@ -46,7 +46,7 @@ function searchIfSomeoenLikedMyInstagram(channel, miInstagram, who) {
   });
 }
 
-function searchIfSomeoenLikedMe(channel, miUsername, likes, myInstagram) {
+function searchIfSomeoenLikedMe(client, channel, miUsername, likes, myInstagram) {
   /* let query = myInstagram ? { likes: { $in:[miUsername.toLowerCase(), myInstagram.instagram.toLowerCase()]}, who: likes} : { likes: miUsername.toLowerCase(), who: likes}; */
   let query = { likes: miUsername.toLowerCase(), who: likes.toLowerCase() };
 

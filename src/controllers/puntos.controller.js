@@ -1,7 +1,7 @@
 import { Puntos } from '../models/punto';
 
 
-export const punto = (args, channel, tags, message, self) => {
+export const punto = (client, args, channel, tags, message, self) => {
 	try {
 		if (args[0] && args[0].startsWith('@')) {
 			args[0] = args[0].startsWith('@') ? args[0].substring(1) : args[0];
@@ -33,7 +33,7 @@ export const punto = (args, channel, tags, message, self) => {
 	}
 }
 
-export const puntos = (args) => {
+export const puntos = (client, args, channel, tags, message, self) => {
 	try {
 		if (args[0] && args[0].startsWith('@')) {
 			args[0] = args[0].startsWith('@') ? args[0].substring(1) : args[0];
