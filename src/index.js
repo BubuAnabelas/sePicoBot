@@ -82,9 +82,8 @@ client.on('message', (channel, tags, message, self) => {
         }
       }
       case CONSTANTS.COMMANDS.DADOS: {
-        if (tags.mod || tags.badges.broadcaster === '1') {
-          dadosController.dados(client, args, channel, tags, message, self)
-        }
+        dadosController.dados(client, args, channel, tags, message, self)
+
       }
     }
   } catch (error) {
