@@ -5,7 +5,7 @@ export const amonestacion = (args, channel, tags, message, self) => {
   try {
     if (args[0] && args[0].startsWith('@')) {
       args[0] = args[0].startsWith('@') ? args[0].substring(1) : args[0];
-      let amonestacionesDadas = args[1];
+      let amonestacionesDadas = args[1] || 5;
       if (isNaN(amonestacionesDadas) || amonestacionesDadas < 0) return;
       if (amonestacionesDadas > CONSTANTS.AMONESTACIONES_PARA_TIMEOUT) {
         amonestacionesDadas = CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT;
