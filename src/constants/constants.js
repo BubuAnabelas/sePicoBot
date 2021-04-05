@@ -3,7 +3,8 @@ export const CONSTANTS = {
     LIKE: "like",
     PUNTO: "punto",
     PUNTOS: "puntos",
-    AMONESTACION: "amonestacion"
+    AMONESTACION: "amonestacion",
+    DADOS: "dados"
   },
   AMONESTACIONES: {
     AMONESTACIONES_PARA_TIMEOUT: 15
