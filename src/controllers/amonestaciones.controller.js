@@ -20,7 +20,7 @@ export const amonestacion = (client, args, channel, tags, message, self) => {
           console.log(amonestaciones)
           const amonestacionesPasadas = amonestaciones.reduce((acc, a) => acc + a.quantity, 0);
           const timeoutsDados = parseInt(amonestacionesPasadas / CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT, 10);
-          const total = amonestacionesPasadas + amonestacionesPasadas;
+          const total = amonestacionesPasadas + amonestacionesDadas;
           const totalActuales = total - timeoutsDados * CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT;
 
           const amonestacion = new Amonestaciones({ user, givenBy: tags.username, quantity: amonestacionesDadas });
