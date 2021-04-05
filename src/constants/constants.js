@@ -3,7 +3,7 @@ export const CONSTANTS = {
     LIKE: "like",
     PUNTO: "punto",
     PUNTOS: "puntos",
-    AMONESTACION: "amonestacion",
+    AMONESTACION: "strike",
     DADOS: "dados"
   },
   AMONESTACIONES: {
