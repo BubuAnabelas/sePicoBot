@@ -6,15 +6,18 @@ export const amonestacion = (client, args, channel, tags, message, self) => {
   try {
     if (args[0] && args[0].startsWith('@')) {
       args[0] = args[0].startsWith('@') ? args[0].substring(1) : args[0];
-      let amonestacionesDadas = args[1] || 5;
+      let amonestacionesDadas = args[1] ? parseInt(args[1]) : 5;
       console.log(amonestacionesDadas)
       if (isNaN(amonestacionesDadas) || amonestacionesDadas < 0) return;
+      console.log('paso el check');
       if (amonestacionesDadas > CONSTANTS.AMONESTACIONES_PARA_TIMEOUT) {
         amonestacionesDadas = CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT;
       }
       let user = args[0].toLowerCase();
       Amonestaciones.find({ user: user }, (err, amonestaciones) => {
+        console.log(err);
         if (err) throw new Error(err);
+        console.log(user != tags.username);
         if (user != tags.username) return
         console.log(amonestaciones)
         if (amonestaciones) {
