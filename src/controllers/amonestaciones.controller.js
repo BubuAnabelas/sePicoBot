@@ -38,7 +38,7 @@ export const amonestacion = (args, channel, tags, message, self) => {
             );
           }
         } else {
-          const amonestacion = new Amonestaciones({ user, givenBy: tags.username, quantity = amonestacionesDadas });
+          const amonestacion = new Amonestaciones({ user, givenBy: tags.username, quantity: amonestacionesDadas });
           if (amonestacionesDadas === CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT) {
             client.say(
               channel,
