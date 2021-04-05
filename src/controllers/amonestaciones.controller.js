@@ -8,7 +8,7 @@ export const amonestacion = (client, args, channel, tags, message, self) => {
       args[0] = args[0].startsWith('@') ? args[0].substring(1) : args[0];
       let amonestacionesDadas = args[1] ? parseInt(args[1]) : 5;
       if (isNaN(amonestacionesDadas) || amonestacionesDadas < 0) return;
-      if (amonestacionesDadas > CONSTANTS.AMONESTACIONES_PARA_TIMEOUT) {
+      if (amonestacionesDadas > CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT) {
         amonestacionesDadas = CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT;
       }
       let user = args[0].toLowerCase();
@@ -26,10 +26,9 @@ export const amonestacion = (client, args, channel, tags, message, self) => {
           const amonestacion = new Amonestaciones({ user, givenBy: tags.username, quantity: amonestacionesDadas });
           amonestacion.save();
           console.log('total', total)
-          console.log('actuales', parseInt(total / CONSTANTS.AMONESTACIONES_PARA_TIMEOUT, 10))
+          console.log('actuales', parseInt(total / CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT, 10))
           console.log('dados', timeoutsDados)
-          if (parseInt(total / CONSTANTS.AMONESTACIONES_PARA_TIMEOUT, 10) > timeoutsDados) {
-
+          if (parseInt(total / CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT, 10) > timeoutsDados) {
             client.say(
               channel,
               `/timeout @${user} 300`
