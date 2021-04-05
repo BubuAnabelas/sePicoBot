@@ -75,15 +75,17 @@ client.on('message', (channel, tags, message, self) => {
       }
       case CONSTANTS.COMMANDS.LIKE: {
         sePicoController.like(client, args, channel, tags, message, self)
+        break;
       }
       case CONSTANTS.COMMANDS.AMONESTACION: {
         if (tags.mod || tags.badges.broadcaster === '1') {
           amonestacionesController.amonestacion(client, args, channel, tags, message, self)
         }
+        break;
       }
       case CONSTANTS.COMMANDS.DADOS: {
         dadosController.dados(client, args, channel, tags, message, self)
-
+        break;
       }
     }
   } catch (error) {
