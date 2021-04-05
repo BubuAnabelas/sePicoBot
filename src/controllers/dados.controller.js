@@ -4,6 +4,6 @@ export const dados = (client, args, channel, tags, message, self) => {
     let dadoDos = dados[Math.floor(Math.random() * dados.length)];
     client.say(
         channel,
-        `${dadoUno} ${dadoDos}`
+        `${tags.username} tiraste ${dadoUno} ${dadoDos}`
     );
 }
