@@ -9,6 +9,6 @@ export const dados = (client, args, channel, tags, message, self) => {
     }
     client.say(
         channel,
-        `@${tags.username} tiraste ${dadoUno} ${dadoDos} ${dadoTres ? "y " + dadoTres + " " + dadoCuatro : ""} }`
+        `@${tags.username} tiraste ${dadoUno} ${dadoDos} ${dadoTres ? "y " + dadoTres + " " + dadoCuatro : ""}`
     );
 }
