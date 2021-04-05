@@ -19,7 +19,8 @@ export const amonestacion = (args, channel, tags, message, self) => {
           const timeoutsDados = parseInt(amonestacionesPasadas / CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT, 10);
           const total = amonestacionesPasadas + amonestacionesPasadas;
           const totalActuales = total - timeoutsDados * CONSTANTS.AMONESTACIONES.AMONESTACIONES_PARA_TIMEOUT;
-          const amonestacion = new Amonestaciones({ user, givenBy: tags.username, quantity = amonestacionesDadas });
+
+          const amonestacion = new Amonestaciones({ user, givenBy: tags.username, quantity: amonestacionesDadas });
           amonestacion.save();
           if (parseInt(total / CONSTANTS.AMONESTACIONES_PARA_TIMEOUT, 10) > timeoutsDados) {
             client.say(
