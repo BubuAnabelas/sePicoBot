@@ -1,29 +1,69 @@
 {
   "name": "sepicobot",
-  "version": "1.0.0",
   "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./dist/index.js",
-    "postinstall": "npm run transpile",
-    "transpile": "npm run clean && babel ./src --out-dir dist",
-    "clean": "rimraf dist"
-  },
-  "author": "",
-  "license": "ISC",
+  "version": "0.1.0",
+  "private": true,
+  "proxy": "http://localhost:8080",
   "dependencies": {
-    "@babel/cli": "^7.12.8",
-    "@babel/core": "^7.12.9",
-    "@babel/plugin-transform-runtime": "^7.12.1",
-    "@babel/preset-env": "^7.12.7",
-    "mongoose": "^5.11.4",
-    "nodemon": "^2.0.6",
+    "@babel/cli": "^7.13.14",
+    "@babel/core": "^7.13.15",
+    "@babel/plugin-transform-runtime": "^7.13.15",
+    "@babel/preset-env": "^7.13.15",
+    "@material-ui/core": "^4.11.3",
+    "@material-ui/icons": "^4.11.2",
+    "@testing-library/jest-dom": "^5.11.10",
+    "@testing-library/react": "^11.2.6",
+    "@testing-library/user-event": "^12.8.3",
+    "axios": "^0.21.1",
+    "body-parser": "^1.19.0",
+    "connected-react-router": "^6.9.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "history": "^4.10.1",
+    "mongoose": "^5.12.3",
+    "nodemon": "^2.0.7",
+    "npm-run-all": "^4.1.5",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-grid-layout": "^1.2.4",
+    "react-redux": "^7.2.3",
+    "react-router": "^5.2.0",
+    "react-scripts": "4.0.3",
+    "redux": "^4.0.5",
+    "redux-promise-middleware": "^6.1.2",
+    "redux-thunk": "^2.3.0",
     "rimraf": "^3.0.2",
-    "tmi.js": "^1.5.0",
-    "express": "^4.17.1"
+    "tmi.js": "^1.7.5",
+    "web-vitals": "^1.1.1"
   },
-  "devDependencies": {},
+  "scripts": {
+    "postinstall": "npm run build:front && npm run build:server",
+    "start": "npm run start:server",
+    "start:front": "react-scripts start",
+    "start:server": "node ./dist/index.js",
+    "build:front": "react-scripts build",
+    "build:server": "rimraf ./dist && babel ./server --out-dir dist",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "babel": {
     "presets": [
       "@babel/preset-env"
@@ -31,5 +71,13 @@
     "plugins": [
       "@babel/plugin-transform-runtime"
     ]
+  },
+  "devDependencies": {
+    "babel-eslint": "*",
+    "dotenv": "^8.2.0",
+    "eslint": "*",
+    "eslint-config-prettier": "^8.1.0",
+    "eslint-plugin-react": "*",
+    "prettier": "*"
   }
 }
