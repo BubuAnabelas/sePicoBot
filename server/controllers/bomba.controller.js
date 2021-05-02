@@ -25,7 +25,7 @@ export const prenderBomba = (client, args, channel, tags, message, self) => {
 
         client.say(
           channel,
-          `@${tags.username} prendio una 💣 y la recibio @${randomViewer}, @${randomViewer} pasala escribiendo !pasarbomba @alguien`
+          `@${tags.username} prendió una 💣 y la recibió @${randomViewer}, @${randomViewer} pasala escribiendo !pasarbomba @alguien`
         );
       });
     });
@@ -38,12 +38,12 @@ function explodeBomb(client, channel) {
   try {
     Bomba.findOne({ state: 'Active' }, (err, activeBomb) => {
       if (err || !activeBomb) {
-        console.log('no se encontro una 💣 activa');
+        console.log('no se encontró una 💣 activa');
         return;
       }
       activeBomb.state = 'Inactive';
       activeBomb.save();
-      client.say(channel, `💥💥💥@${activeBomb.userReceiver} te exploto la 💣 en todo el oso💥💥💥`);
+      client.say(channel, `💥💥💥@${activeBomb.userReceiver} te ESSPLOTÓ la 💣 en todo el oso💥💥💥`);
     });
   } catch (error) {
     console.log(error);
@@ -101,7 +101,7 @@ function passBombToUser(channel, client, user, tags, activeBomb, inactive = fals
   if (inactive) {
     client.say(
       channel,
-      `@${activeBomb.userSender} parece estar inactivo. La 💣 pasa a @${user}! pasa la bomba antes de que te explote en el oso `
+      `@${activeBomb.userSender} parece estar inactivo. La 💣 pasa a @${user}! pasa la 💣 antes de que te explote en el oso `
     );
   } else {
     client.say(
