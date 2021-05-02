@@ -29,7 +29,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const canalDeTwitch = 'ieltxu';
+const canalDeTwitch = 'jmellera';
 
 app.use(express.static(path.join(__dirname, '..', 'build')));
 

@@ -16,7 +16,7 @@ export const CONSTANTS = {
   },
   BOMBA: {
     EXPLOSION: 570000,
-    INACTIVO: 60000,
+    INACTIVO: 120000,
     GRACIA: 30000
   }
 };
