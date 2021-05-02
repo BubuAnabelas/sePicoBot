@@ -25,7 +25,7 @@ export const prenderBomba = (client, args, channel, tags, message, self) => {
 
         client.say(
           channel,
-          `@${tags.username} prendio una bomba y la recibio @${randomViewer}, @${randomViewer} pasala escribiendo !pasarbomba @alguien`
+          `@${tags.username} prendio una 💣 y la recibio @${randomViewer}, @${randomViewer} pasala escribiendo !pasarbomba @alguien`
         );
       });
     });
@@ -38,12 +38,12 @@ function explodeBomb(client, channel) {
   try {
     Bomba.findOne({ state: 'Active' }, (err, activeBomb) => {
       if (err || !activeBomb) {
-        console.log('no se encontro una bomba activa');
+        console.log('no se encontro una 💣 activa');
         return;
       }
       activeBomb.state = 'Inactive';
       activeBomb.save();
-      client.say(channel, `@${activeBomb.userReceiver} te exploto la bomba en todo el oso`);
+      client.say(channel, `💥💥💥@${activeBomb.userReceiver} te exploto la 💣 en todo el oso💥💥💥`);
     });
   } catch (error) {
     console.log(error);
@@ -101,12 +101,12 @@ function passBombToUser(channel, client, user, tags, activeBomb, inactive = fals
   if (inactive) {
     client.say(
       channel,
-      `@${activeBomb.userSender} parece estar inactivo. La bomba pasa a @${user}! pasa la bomba antes de que te explote en el oso `
+      `@${activeBomb.userSender} parece estar inactivo. La 💣 pasa a @${user}! pasa la bomba antes de que te explote en el oso `
     );
   } else {
     client.say(
       channel,
-      `@${activeBomb.userSender} Le paso la bomba a  @${user}. @${user} pasa la bomba antes de que te explote en el oso `
+      `@${activeBomb.userSender} Le paso la 💣 a  @${user}. @${user} pasa la 💣 antes de que te explote en el oso `
     );
   }
 
@@ -121,7 +121,7 @@ export function desactivarBomba(client, args, channel, tags) {
 
       activeBomb.state = 'Inactive';
       activeBomb.save();
-      client.say(channel, `@${tags.username} desactivo la bomba`);
+      client.say(channel, `@${tags.username} desactivo la 💣`);
     });
   } catch (error) {
     console.log(error);
@@ -132,9 +132,9 @@ export function consultarBomba(client, args, channel, tags) {
   try {
     Bomba.findOne({ state: 'Active' }, (err, activeBomb) => {
       if (err || !activeBomb) {
-        client.say(channel, `No hay una bomba activa`);
+        client.say(channel, `No hay una 💣 activa`);
       } else {
-        client.say(channel, `La bomba la tiene @${activeBomb.userReceiver}`);
+        client.say(channel, `La 💣 la tiene @${activeBomb.userReceiver}`);
       }
     });
   } catch (error) {
