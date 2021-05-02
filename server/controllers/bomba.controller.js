@@ -10,22 +10,32 @@ export const prenderBomba = (client, args, channel, tags, message, self) => {
         return;
       }
       activeChatters.getActiveUsers(channel).then(viewers => {
+        let user;
         viewers = viewers.filter(user => user !== tags.username && user !== 'nightbot' && user !== 'sepicobot');
-        const randomViewer = viewers[Math.floor(Math.random() * viewers.length)];
+        if (
+          args[0] &&
+          args[0].startsWith('@') &&
+          viewers.find(v => v === args[0].substring(1).toLowerCase()) !== undefined
+        ) {
+          //chequear logica de args: arriba ya estoy verificando por el arroba, porque aca abajo chequea de nuevo?
+          user = args[0].substring(1).toLowerCase();
+        } else {
+          user = viewers[Math.floor(Math.random() * viewers.length)];
+        }
         inactiveBomb.state = 'Active';
         inactiveBomb.userSender = tags.username;
-        inactiveBomb.userReceiver = randomViewer;
+        inactiveBomb.userReceiver = user;
         inactiveBomb.save();
 
         // tiempo para que explote (entre 30 segundos y 10 minutos)
         let explotes = Math.floor(Math.random() * CONSTANTS.BOMBA.EXPLOSION) + CONSTANTS.BOMBA.GRACIA;
 
         setTimeout(() => explodeBomb(client, channel), explotes);
-        setTimeout(() => checkInactive(randomViewer, client, channel, tags), CONSTANTS.BOMBA.INACTIVO);
+        setTimeout(() => checkInactive(user, client, channel, tags), CONSTANTS.BOMBA.INACTIVO);
 
         client.say(
           channel,
-          `@${tags.username} prendió una 💣 y la recibió @${randomViewer}, @${randomViewer} pasala escribiendo !pasarbomba @alguien`
+          `@${tags.username} prendió una 💣 y la recibió @${user}, @${user} pasala escribiendo !pasarbomba @alguien`
         );
       });
     });
