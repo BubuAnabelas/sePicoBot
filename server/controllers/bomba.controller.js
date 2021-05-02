@@ -44,7 +44,7 @@ function explodeBomb(client, channel) {
       activeBomb.state = 'Inactive';
       activeBomb.save();
       client.say(channel, `💥💥💥@${activeBomb.userReceiver} te ESSPLOTÓ la 💣 en todo el oso💥💥💥`);
-      client.timeout(channel, activeBomb.userReceiver, 300, `bomba`);
+      client.timeout(channel, activeBomb.userReceiver, 120, `bomba`);
     });
   } catch (error) {
     console.log(error);
