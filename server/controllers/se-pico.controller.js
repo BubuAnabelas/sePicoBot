@@ -4,7 +4,7 @@ export const like = (client, args, channel, tags, message, self) => {
   if (args[0]) {
     args[0] = args[0].startsWith('@') ? args[0].substring(1) : args[0];
     if (args[0] !== tags.username) {
-      searchIfSomeoneLikedMe(client, channel, tags.username, args[0]);
+      userCanLike(client, channel, tags, args)
     }
   }
 };
@@ -18,6 +18,29 @@ export const dislike = (client, args, channel, tags, message, self) => {
     }
   }
 };
+
+async function userCanLike(client, channel, tags, args) {
+  let date = new Date();
+  let firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+  let lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+  let likesCount = await Like.countDocuments({ who: tags.username.toLowerCase(), created_at: { '$gte': firstDay, '$lte': lastDay } },
+    (err, likeNumber) => {
+      if (tags.subscriber) {
+        if (likeNumber >= 15) {
+          client.say(channel, `@${tags.username} tenes mas de 15 likes este mes!`);
+          return false
+        }
+      }
+      else {
+        if (likeNumber >= 10) {
+          client.say(channel, `@${tags.username} tenes mas de 10 likes este mes! Si te subeas tenes 5 likes mas!`);
+          return false;
+        }
+      }
+      searchIfSomeoneLikedMe(client, channel, tags.username, args[0]);
+    });
+
+}
 
 function newLike(likeAuthor, likedPerson) {
   let like = new Like({ who: likeAuthor.toLowerCase(), likes: likedPerson.toLowerCase() });
