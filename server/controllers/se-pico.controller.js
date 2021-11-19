@@ -1,77 +1,68 @@
-import { Match } from '../models/match';
+import { Like } from '../models/like';
 
 export const like = (client, args, channel, tags, message, self) => {
   if (args[0]) {
     args[0] = args[0].startsWith('@') ? args[0].substring(1) : args[0];
     if (args[0] !== tags.username) {
-      searchIfSomeoenLikedMe(client, channel, tags.username, args[0]);
+      searchIfSomeoneLikedMe(client, channel, tags.username, args[0]);
     }
   }
 };
 
-function newMatch(who, likes) {
-  let match = new Match({ who: who.toLowerCase(), likes: likes.toLowerCase() });
-  match.save((err, match) => {
+
+export const dislike = (client, args, channel, tags, message, self) => {
+  if (args[0]) {
+    args[0] = args[0].startsWith('@') ? args[0].substring(1) : args[0];
+    if (args[0] !== tags.username) {
+      dislikeSomeone(client, channel, tags.username, args[0]);
+    }
+  }
+};
+
+function newLike(likeAuthor, likedPerson) {
+  let like = new Like({ who: likeAuthor.toLowerCase(), likes: likedPerson.toLowerCase() });
+  like.save((err, like) => {
     if (err) throw new Error(e.message);
   });
 }
 
-function searchIfSomeoenLikedMyInstagram(client, channel, miInstagram, who) {
-  return new Promise((resolve, reject) => {
-    Match.findOne({ likes: miInstagram.who, who }, (err, match) => {
-      if (err) {
-        console.log(err);
-      } else {
-        if (match) {
-          match.match = true;
-          Iam.findOne({ who: match.who }, (err, whoInstagram) => {
-            match.save();
-            client.say(
-              channel,
-              `match entre @${match.who} ${
-                whoInstagram && whoInstagram.instagram ? 'https://instagram.com/' + whoInstagram.instagram : ''
-              } y @${miInstagram.who || ''} ${
-                miInstagram && miInstagram.instagram ? 'https://instagram.com/' + miInstagram.instagram : ''
-              }`
-            );
-            resolve(true);
-          });
-        } else {
-          resolve(false);
-        }
-      }
-    });
+function dislikeSomeone(client, channel, dislikeAuthor, dislikedPerson) {
+  let query = { likes: dislikeAuthor.toLowerCase(), who: dislikedPerson.toLowerCase() };
+  let invertedQuery = { likes: dislikedPerson.toLowerCase(), who: dislikeAuthor.toLowerCase() }
+  Like.findOneAndDelete(query,
+    (err, like) => {
+      client.say(channel, `@${dislikeAuthor}, dislikeó a @${dislikedPerson || ''} jujuj`);
+    }
+  );
+
+  Like.findOneAndDelete(invertedQuery, (err, invertedLike) => { })
+}
+
+function searchIfSomeoneLikedMe(client, channel, likeAuthor, likedPerson) {
+  let query = { who: likeAuthor.toLowerCase(), likes: likedPerson.toLowerCase() };
+  Like.findOne(query, (err, like) => {
+    if (like) {
+      answerIfIsMatch(client, channel, likeAuthor, likedPerson)
+    }
+    else {
+      newLike(likeAuthor, likedPerson);
+      answerIfIsMatch(client, channel, likeAuthor, likedPerson)
+    }
   });
 }
 
-function searchIfSomeoenLikedMe(client, channel, miUsername, likes, myInstagram) {
-  let query = { likes: miUsername.toLowerCase(), who: likes.toLowerCase() };
-
-  Match.findOne(query, (err, match) => {
-    if (err) {
-    } else {
-      if (match) {
-        match.match = true;
-        match.save();
-        client.say(channel, `match entre @${match.who} y @${miUsername}`);
-      } else {
-        Match.findOne(
-          {
-            who: miUsername.toLowerCase(),
-            likes: likes.toLowerCase(),
-            match: true
-          },
-          (err, match) => {
-            if (match) {
-              match.match = true;
-              match.save();
-              client.say(channel, `match entre @${match.who} y @${likes || ''}`);
-            } else {
-              newMatch(miUsername, likes);
-            }
-          }
-        );
-      }
+function findInvertedLike(client, channel, likeAuthor, likedPerson) {
+  let query = { who: likedPerson.toLowerCase(), likes: likeAuthor.toLowerCase() };
+  Like.findOne(query, (err, like) => {
+    if (like) {
+      client.say(channel, `match @${likeAuthor} y @${likedPerson || ''}`);
+    }
+    else {
+      return false;
     }
   });
+}
+
+function answerIfIsMatch(client, channel, likeAuthor, likedPerson) {
+  findInvertedLike(client, channel, likeAuthor.toLowerCase(), likedPerson.toLowerCase())
 }

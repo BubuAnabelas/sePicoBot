@@ -1,6 +1,7 @@
 export const CONSTANTS = {
   COMMANDS: {
     LIKE: 'like',
+    DISLIKE: 'dislike',
     PUNTO: 'punto',
     PUNTOS: 'puntos',
     AMONESTACION: 'strike',

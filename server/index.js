@@ -49,7 +49,7 @@ if (process.env.NODE_ENV !== 'production') {
       Puntos.remove({}, (err, puntos) => {
         res.send('puntos borrados');
       });
-    } catch (error) {}
+    } catch (error) { }
   });
 }
 
@@ -90,6 +90,10 @@ client.on('message', (channel, tags, message, self) => {
       }
       case CONSTANTS.COMMANDS.LIKE: {
         sePicoController.like(client, args, channel, tags, message, self);
+        break;
+      }
+      case CONSTANTS.COMMANDS.DISLIKE: {
+        sePicoController.dislike(client, args, channel, tags, message, self);
         break;
       }
       case CONSTANTS.COMMANDS.AMONESTACION: {
