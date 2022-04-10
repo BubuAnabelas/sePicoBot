@@ -17,6 +17,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
   console.log('conectado');
 });
+mongoose.set('useFindAndModify', false);
 
 const express = require('express');
 const app = express();

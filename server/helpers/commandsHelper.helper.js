@@ -4,6 +4,7 @@ import * as sePicoController from '../controllers/se-pico.controller';
 import * as amonestacionesController from '../controllers/amonestaciones.controller';
 import * as dadosController from '../controllers/dados.controller';
 import * as bombaController from '../controllers/bomba.controller';
+import * as cumpleController from '../controllers/cumple.controller';
 
 export const executeCommand = (client, args, channel, tags, message, self, command) => {
   switch (command) {
@@ -53,6 +54,18 @@ export const executeCommand = (client, args, channel, tags, message, self, comma
     }
     case CONSTANTS.COMMANDS.CONSULTARBOMBA: {
       bombaController.consultarBomba(client, args, channel, tags, message, self);
+      break;
+    }
+    case CONSTANTS.COMMANDS.CUMPLO: {
+      cumpleController.cumplo(client, args, channel, tags, message, self);
+      break;
+    }
+    case CONSTANTS.COMMANDS.CUMPLES: {
+      cumpleController.cumples(client, args, channel, tags, message, self);
+      break;
+    }
+    case CONSTANTS.COMMANDS.CUANDOCUMPLE: {
+      cumpleController.cuandoCumple(client, args, channel, tags, message, self);
       break;
     }
   }

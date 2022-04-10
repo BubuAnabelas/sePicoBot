@@ -38,7 +38,7 @@
   },
   "scripts": {
     "postinstall": "npm run build:front && npm run build:server",
-    "start": "npm run start:server",
+    "start": "npm install && npm run start:server",
     "start:front": "react-scripts start",
     "start:server": "node ./dist/index.js",
     "build:front": "react-scripts build",

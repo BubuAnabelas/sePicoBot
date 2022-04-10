@@ -11,7 +11,9 @@ export const CONSTANTS = {
     DESACTIVARBOMBA: 'desactivar',
     CONSULTARBOMBA: 'consultarbomba',
     COMANDOSBOMBA: 'comandosbomba',
-    cumplo: 'cumplo'
+    CUMPLO: 'cumplo',
+    CUMPLES: 'cumples',
+    CUANDOCUMPLE: 'cuandocumple'
   },
   AMONESTACIONES: {
     AMONESTACIONES_PARA_TIMEOUT: 3
