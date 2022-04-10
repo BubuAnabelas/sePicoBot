@@ -44,6 +44,9 @@ export const cuandoCumple = (client, args, channel, tags, message, self) => {
       if (cumple) {
         client.say(channel, `@${user} cumple el ${cumple.birthdayDay}/${cumple.birthdayMonth}`);
       }
+      else {
+        client.say(channel, `@${user} es un zanganx y no registro su cumpleaños`);
+      }
     });
   } catch (error) {
     console.log(error);
