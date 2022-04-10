@@ -25,7 +25,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const canalDeTwitch = "jmellera";
+const canalDeTwitch = process.env.CANAL;
 
 app.use(express.static(path.join(__dirname, '..', 'build')));
 
