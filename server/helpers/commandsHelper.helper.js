@@ -68,5 +68,9 @@ export const executeCommand = (client, args, channel, tags, message, self, comma
       cumpleController.cuandoCumple(client, args, channel, tags, message, self);
       break;
     }
+    case CONSTANTS.COMMANDS.PUNTOYBAN: {
+      puntosController.puntoyban(client, args, channel, tags, message, self);
+      break;
+    }
   }
 };

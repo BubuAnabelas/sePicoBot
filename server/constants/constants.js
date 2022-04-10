@@ -13,7 +13,8 @@ export const CONSTANTS = {
     COMANDOSBOMBA: 'comandosbomba',
     CUMPLO: 'cumplo',
     CUMPLES: 'cumples',
-    CUANDOCUMPLE: 'cuandocumple'
+    CUANDOCUMPLE: 'cuandocumple',
+    PUNTOYBAN: 'puntoyban'
   },
   AMONESTACIONES: {
     AMONESTACIONES_PARA_TIMEOUT: 3
