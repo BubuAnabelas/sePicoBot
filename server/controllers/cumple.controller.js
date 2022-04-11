@@ -21,7 +21,9 @@ export const cumplo = (client, args, channel, tags, message, self) => {
 
 export const cumples = (client, args, channel, tags, message, self) => {
   try {
-    const today = new Date()
+    const offset = -8;
+    const todayString = new Date( new Date().getTime() + offset * 3600 * 1000).toUTCString().replace( / GMT$/, "" )
+    const today = new Date(todayString)
     Cumple.find({ birthdayDay: today.getDate(), birthdayMonth: today.getMonth() +1  }, 'user -_id', (err, cumples) => {
       if (err) throw new Error(err);
       if (cumples) {
