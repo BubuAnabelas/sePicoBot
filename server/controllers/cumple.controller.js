@@ -27,7 +27,14 @@ export const cumples = (client, args, channel, tags, message, self) => {
       if (cumples) {
         const total = cumples.length;
         cumples = cumples.map((cumple) => cumple.user).join(', ')
-        client.say(channel, `Hoy cumplen ${cumples}`);
+        let message = ''
+        if(cumples.length > 0) {
+          message =  `Hoy cumplen ${cumples}`
+        }
+        else {
+          message =  `Hoy no cumple nadie`
+        }
+        client.say(channel, message);
       }
     });
   } catch (error) {
