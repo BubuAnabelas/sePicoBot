@@ -69,7 +69,9 @@ export const executeCommand = (client, args, channel, tags, message, self, comma
       break;
     }
     case CONSTANTS.COMMANDS.PUNTOYBAN: {
-      puntosController.puntoyban(client, args, channel, tags, message, self);
+      if (tags.mod || tags.badges.broadcaster === '1') {
+        puntosController.puntoyban(client, args, channel, tags, message, self);
+      }
       break;
     }
   }
