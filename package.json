@@ -32,8 +32,8 @@
     "redux": "^4.0.5",
     "redux-promise-middleware": "^6.1.2",
     "redux-thunk": "^2.3.0",
-    "rimraf": "^3.0.2",
     "tmi.js": "^1.7.5",
+    "ts-pattern": "^4.0.2",
     "web-vitals": "^1.1.1"
   },
   "scripts": {
@@ -78,6 +78,7 @@
     "eslint": "*",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-react": "*",
-    "prettier": "*"
+    "prettier": "*",
+    "rimraf": "^3.0.2"
   }
 }

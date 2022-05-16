@@ -1,5 +1,6 @@
 import { Puntos } from '../models/punto';
 import * as activeChatters from '../helpers/activeChannelUsers.helper';
+import { isMod, isStreamer, normalizeUser } from '../helpers/utils.helper';
 
 function saveAndGetTotalPoints(puntos, user, tags) {
   const total = puntos ? puntos.length + 1 : 1;
@@ -9,32 +10,33 @@ function saveAndGetTotalPoints(puntos, user, tags) {
 }
 
 export const punto = (client, args, channel, tags, message, self) => {
-  try {
-    if (args[0] && args[0].startsWith('@')) {
-      args[0] = args[0].substring(1);
-      let user = args[0].toLowerCase();
-      activeChatters.getActiveUsers(channel).then(viewers => {
-        if (viewers && viewers.find(u => u === user)) {
-          Puntos.find({ user: user }, (err, puntos) => {
-            if (err) throw new Error(err);
-            if (puntos && user != tags.username) {
-              const total = saveAndGetTotalPoints(puntos, user, tags);
-              if (user !== 'menem91') {
-                client.say(channel, `punto punto punto para la ${user} army! @${user} tiene ${total} puntos!`);
+  if (isMod(tags) || isStreamer(tags)) {
+    try {
+      if (args[0]) {
+        let user = normalizeUser(args[0]);
+        activeChatters.getActiveUsers(channel).then(viewers => {
+          if (viewers && viewers.find(u => u === user)) {
+            Puntos.find({ user: user }, (err, puntos) => {
+              if (err) throw new Error(err);
+              if (puntos && user != tags.username) {
+                const total = saveAndGetTotalPoints(puntos, user, tags);
+                if (user !== 'menem91') {
+                  client.say(channel, `punto punto punto para la ${user} army! @${user} tiene ${total} puntos!`);
+                } else {
+                  client.say(channel, `punto punto punto para la ${user} army! @${user} tiene -${total} puntos!`);
+                }
               } else {
-                client.say(channel, `punto punto punto para la ${user} army! @${user} tiene -${total} puntos!`);
+                client.say(channel, `No seas corrupto @${tags.username}!`);
               }
-            } else {
-              client.say(channel, `No seas corrupto @${tags.username}!`);
-            }
-          });
-        } else {
-          client.say(channel, `${user} no esta en el chat, no se le puede dar los puntitos.`);
-        }
-      });
+            });
+          } else {
+            client.say(channel, `${user} no esta en el chat, no se le puede dar los puntitos.`);
+          }
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
   }
 };
 
@@ -42,8 +44,7 @@ export const puntos = (client, args, channel, tags, message, self) => {
   try {
     let user;
     if (args[0]) {
-      args[0] = args[0].startsWith('@') ? args[0].substring(1) : args[0];
-      user = args[0].toLowerCase();
+      user = normalizeUser(args[0]);
     } else {
       user = tags.username;
     }
@@ -64,29 +65,29 @@ export const puntos = (client, args, channel, tags, message, self) => {
 };
 
 export const puntoyban = (client, args, channel, tags, message, self) => {
-  try {
-    if (args[0] && args[0].startsWith('@')) {
-      args[0] = args[0].substring(1);
-      let user = args[0].toLowerCase();
-      activeChatters.getActiveUsers(channel).then(viewers => {
-        if (viewers && viewers.find(u => u === user)) {
-          Puntos.find({ user: user }, (err, puntos) => {
-            if (err) throw new Error(err);
-            if (puntos && user != tags.username) {
-              const total = saveAndGetTotalPoints(puntos, user, tags);
-              client.say(channel, `punto punto punto para la ${user} army! @${user} tiene ${total} puntos! Y UN BAN TAMBIEN`);
-              client.timeout(channel, user, 120, `punto y ban`);
-            } else {
-              client.say(channel, `No seas corrupto @${tags.username}!`);
-            }
-          });
-        } else {
-          client.say(channel, `${user} no esta en el chat, no se le puede dar los puntitos.`);
-        }
-      });
+  if (isMod(tags) || isStreamer(tags)) {
+    try {
+      if (args[0]) {
+        let user = normalizeUser(args[0]);
+        activeChatters.getActiveUsers(channel).then(viewers => {
+          if (viewers && viewers.find(u => u === user)) {
+            Puntos.find({ user: user }, (err, puntos) => {
+              if (err) throw new Error(err);
+              if (puntos && user != tags.username) {
+                const total = saveAndGetTotalPoints(puntos, user, tags);
+                client.say(channel, `punto punto punto para la ${user} army! @${user} tiene ${total} puntos! Y UN BAN TAMBIEN`);
+                client.timeout(channel, user, 120, `punto y ban`);
+              } else {
+                client.say(channel, `No seas corrupto @${tags.username}!`);
+              }
+            });
+          } else {
+            client.say(channel, `${user} no esta en el chat, no se le puede dar los puntitos.`);
+          }
+        });
+      }
+    } catch (error) {
+      console.log(error);
     }
-  } catch (error) {
-    console.log(error);
   }
-
 }

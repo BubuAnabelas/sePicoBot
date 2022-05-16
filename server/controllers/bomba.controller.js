@@ -3,44 +3,41 @@ import * as activeChatters from '../helpers/activeChannelUsers.helper';
 import { CONSTANTS } from '../constants/constants';
 
 export const prenderBomba = (client, args, channel, tags, message, self) => {
-  try {
-    Bomba.findOne({ state: 'Inactive' }, (err, inactiveBomb) => {
-      if (err || !inactiveBomb) {
-        client.say(channel, `@${tags.username} ya hay una bomba activa`);
-        return;
-      }
-      activeChatters.getActiveUsers(channel).then(viewers => {
-        let user;
-        viewers = viewers.filter(user => user !== tags.username && user !== 'nightbot' && user !== 'sepicobot');
-        if (
-          args[0] &&
-          args[0].startsWith('@') &&
-          viewers.find(v => v === args[0].substring(1).toLowerCase()) !== undefined
-        ) {
-          //chequear logica de args: arriba ya estoy verificando por el arroba, porque aca abajo chequea de nuevo?
-          user = args[0].substring(1).toLowerCase();
-        } else {
-          user = viewers[Math.floor(Math.random() * viewers.length)];
+  if (isMod(tags) || isStreamer(tags)) {
+    try {
+      Bomba.findOne({ state: 'Inactive' }, (err, inactiveBomb) => {
+        if (err || !inactiveBomb) {
+          client.say(channel, `@${tags.username} ya hay una bomba activa`);
+          return;
         }
-        inactiveBomb.state = 'Active';
-        inactiveBomb.userSender = tags.username;
-        inactiveBomb.userReceiver = user;
-        inactiveBomb.save();
+        activeChatters.getActiveUsers(channel).then(viewers => {
+          let user;
+          viewers = viewers.filter(user => user !== tags.username && user !== 'nightbot' && user !== 'sepicobot');
+          if (args[0] && userInViewersList(args[0], viewers)) {
+            user = normalizeUser(args[0]);
+          } else {
+            user = viewers[Math.floor(Math.random() * viewers.length)];
+          }
+          inactiveBomb.state = 'Active';
+          inactiveBomb.userSender = tags.username;
+          inactiveBomb.userReceiver = user;
+          inactiveBomb.save();
 
-        // tiempo para que explote (entre 30 segundos y 10 minutos)
-        let explotes = Math.floor(Math.random() * CONSTANTS.BOMBA.EXPLOSION) + CONSTANTS.BOMBA.GRACIA;
+          // tiempo para que explote (entre 30 segundos y 10 minutos)
+          let explotes = Math.floor(Math.random() * CONSTANTS.BOMBA.EXPLOSION) + CONSTANTS.BOMBA.GRACIA;
 
-        setTimeout(() => explodeBomb(client, channel), explotes);
-        setTimeout(() => checkInactive(user, client, channel, tags), CONSTANTS.BOMBA.INACTIVO);
+          setTimeout(() => explodeBomb(client, channel), explotes);
+          setTimeout(() => checkInactive(user, client, channel, tags), CONSTANTS.BOMBA.INACTIVO);
 
-        client.say(
-          channel,
-          `@${tags.username} prendió una 💣 y la recibió @${user}, @${user} pasala escribiendo !pasarbomba @alguien`
-        );
+          client.say(
+            channel,
+            `@${tags.username} prendió una 💣 y la recibió @${user}, @${user} pasala escribiendo !pasarbomba @alguien`
+          );
+        });
       });
-    });
-  } catch (error) {
-    console.log(error);
+    } catch (error) {
+      console.log(error);
+    }
   }
 };
 
@@ -81,10 +78,8 @@ function checkInactive(user, client, channel, tags) {
 
 export const pasarBomba = (client, args, channel, tags, message, self) => {
   try {
-    if (args[0] && args[0].startsWith('@')) {
-      //chequear logica de args: arriba ya estoy verificando por el arroba, porque aca abajo chequea de nuevo?
-      args[0] = args[0].startsWith('@') ? args[0].substring(1) : args[0];
-      let user = args[0].toLowerCase();
+    if (args[0]) {
+      let user = normalizeUser(args[0]);
       Bomba.findOne({ state: 'Active' }, (err, activeBomb) => {
         if (err || !activeBomb || user === tags.username || activeBomb.userReceiver !== tags.username) return;
         activeChatters.getActiveUsers(channel).then(viewers => {
@@ -126,16 +121,18 @@ function passBombToUser(channel, client, user, tags, activeBomb, inactive = fals
 }
 
 export function desactivarBomba(client, args, channel, tags) {
-  try {
-    Bomba.findOne({ state: 'Active' }, (err, activeBomb) => {
-      if (err || !activeBomb) return;
+  if (isMod(tags) || isStreamer(tags)) {
+    try {
+      Bomba.findOne({ state: 'Active' }, (err, activeBomb) => {
+        if (err || !activeBomb) return;
 
-      activeBomb.state = 'Inactive';
-      activeBomb.save();
-      client.say(channel, `@${tags.username} desactivo la 💣`);
-    });
-  } catch (error) {
-    console.log(error);
+        activeBomb.state = 'Inactive';
+        activeBomb.save();
+        client.say(channel, `@${tags.username} desactivo la 💣`);
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 

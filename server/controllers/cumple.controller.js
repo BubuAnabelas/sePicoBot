@@ -1,4 +1,5 @@
 import { Cumple } from '../models/cumple';
+import { normalizeUser } from '../helpers/utils.helper';
 
 export const cumplo = (client, args, channel, tags, message, self) => {
   let user = tags.username;
@@ -46,8 +47,7 @@ export const cumples = (client, args, channel, tags, message, self) => {
 
 export const cuandoCumple = (client, args, channel, tags, message, self) => {
   try {
-    args[0] = args[0].substring(1);
-    let user = args[0].toLowerCase();
+    let user = normalizeUser(args[0]);
     Cumple.findOne({ user: user}, 'birthdayDay birthdayMonth -_id', (err, cumple) => {
       if (err) throw new Error(err);
       if (cumple) {
