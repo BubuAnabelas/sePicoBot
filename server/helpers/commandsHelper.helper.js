@@ -5,7 +5,10 @@ import * as amonestacionesController from '../controllers/amonestaciones.control
 import * as dadosController from '../controllers/dados.controller';
 import * as bombaController from '../controllers/bomba.controller';
 import * as cumpleController from '../controllers/cumple.controller';
+import * as gatilloController from '../controllers/gatillos.controller';
 
+
+var active = true;
 export const executeCommand = (client, args, channel, tags, message, self, command) => {
   switch (command) {
     case CONSTANTS.COMMANDS.PUNTO: {
@@ -55,6 +58,19 @@ export const executeCommand = (client, args, channel, tags, message, self, comma
     case CONSTANTS.COMMANDS.CONSULTARBOMBA: {
       bombaController.consultarBomba(client, args, channel, tags, message, self);
       break;
+    }
+    case CONSTANTS.COMMANDS.GATILLAR: {
+      //esto es para cooldownear el comando, definitivamente hay que mejorarlo.
+      if (active) {
+        gatilloController.gatillo(client, args, channel, tags, message, self);
+        active = false;
+        setTimeout(() => {
+            active = true;
+        }, 180000); //2 minutos de cooldown
+      } else {
+        // Do stuff if the command is in cooldown
+      }
+    break;
     }
     case CONSTANTS.COMMANDS.CUMPLO: {
       cumpleController.cumplo(client, args, channel, tags, message, self);

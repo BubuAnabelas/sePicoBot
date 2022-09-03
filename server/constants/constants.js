@@ -14,7 +14,8 @@ export const CONSTANTS = {
     CUMPLO: 'cumplo',
     CUMPLES: 'cumples',
     CUANDOCUMPLE: 'cuandocumple',
-    PUNTOYBAN: 'puntoyban'
+    PUNTOYBAN: 'puntoyban',
+    GATILLAR: 'gatillar'
   },
   AMONESTACIONES: {
     AMONESTACIONES_PARA_TIMEOUT: 3
