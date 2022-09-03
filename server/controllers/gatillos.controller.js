@@ -13,7 +13,7 @@ export const gatillo = (client, args, channel, tags, message, self) => {
                 `@${tags.username} le dió un gatillazo a @${user}. El arma se trabó y no salió el disparo. MAÑANA FERIADO`
               );
             
-            client.timeout(tags.username, user, 300, `gatillo errado`).then((data) => {
+            client.timeout(channel, tags.username, 300, `gatillo errado`).then((data) => {
                 console.log(`el numero que salio es ${number}`);
                 console.log(`el usuairo a banear es ${tags.username}. tags.username`);
             }).catch((err) => {
